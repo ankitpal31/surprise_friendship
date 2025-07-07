@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quiz Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- Inline Styling -->
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            height: 100%;
+        }
+
+        .full-page-bg {
+            background-image: url('/images/friends_final.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .result-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .result-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #222;
+        }
+
+        .answers-list {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .answers-list li {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            background: #f4f4f4;
+            padding: 12px 18px;
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+
+        strong {
+            color: #007bff;
+        }
+
+        @media (max-width: 600px) {
+            .result-container {
+                padding: 25px;
+            }
+
+            .result-title {
+                font-size: 1.5rem;
+            }
+
+            .answers-list li {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="animate__animated animate__fadeInUp">
+<div class="full-page-bg">
+    <div class="result-container">
+        <!-- Navbar fragment -->
+        <div th:replace="fragments/navbar :: navbar"></div>
+
+        <h2 class="result-title">Answers</h2>
+        <ul class="answers-list">
+            <li th:each="entry : ${answers.entrySet()}">
+                <strong>Q[[${entry.key}]]:</strong> [[${entry.value}]]
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

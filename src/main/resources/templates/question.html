@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Question [[${id}]]</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .dot {
+            height: 12px;
+            width: 12px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .active {
+            background-color: #4CAF50;
+        }
+        .fade-slide {
+            animation: fadeInUp 1s ease-in-out;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+.btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+    </style>
+</head>
+<body>
+<div class="background fade-slide" th:style="'background-image: url(/images/friends' + ${id} + '.jpg)'">
+    <div class="container">
+        <div th:replace="fragments/navbar :: navbar"></div>
+
+        <h2>Question [[${id}]]</h2>
+        <p th:text="${question}"></p>
+
+        <form th:action="@{/submitAnswer}" method="post">
+            <input type="hidden" name="id" th:value="${id}" />
+            <input type="text" name="answer" placeholder="Your answer..." required />
+
+            <div class="nav-buttons" style="margin-top: 20px; display: flex; justify-content: space-between;">
+    <div>
+        <a class="btn" th:if="${id > 1}" th:href="@{'/question/' + (${id - 1})}">← Previous</a>
+    </div>
+    <div>
+        <button class="btn" type="submit">
+            [[${id} < 7 ? 'Next →' : 'Finish Quiz →']]
+        </button>
+    </div>
+</div>
+
+        </form>
+
+        <!-- Pagination dots -->
+        <div class="pagination">
+            <span class="dot" th:each="i : ${#numbers.sequence(1,7)}"
+                  th:classappend="${i == id} ? ' active'"></span>
+        </div>
+    </div>
+</div>
+</body>
+</html>
